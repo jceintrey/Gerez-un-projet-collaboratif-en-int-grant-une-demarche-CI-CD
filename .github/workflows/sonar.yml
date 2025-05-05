@@ -27,6 +27,13 @@ jobs:
           projectBaseDir: back
           args: >
             -Dsonar.projectKey=jceintrey_gerez-un-projet-collaboratif-back
+            -Dsonar.organization=jceintrey
+            -Dsonar.sources=src/main/java
+            -Dsonar.tests=src/test/java
+            -Dsonar.java.binaries=target/classes
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            -Dsonar.exclusions=**/test/**,**/__mocks__/**
+            -Dsonar.sourceEncoding=UTF-8
 
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -56,5 +63,11 @@ jobs:
 
           args: >
             -Dsonar.projectKey=jceintrey_gerez-un-projet-collaboratif-front
+            -Dsonar.organization=jceintrey
+            -Dsonar.sources=src
+            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/test/**,**/__mocks__/**
+            -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+            -Dsonar.sourceEncoding=UTF-8
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
