@@ -27,8 +27,7 @@ jobs:
           projectBaseDir: back
           args: >
             -Dsonar.projectKey=jceintrey_gerez-un-projet-collaboratif-back
-            -Dsonar.organization=jceintrey
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   sonar-front:
@@ -57,7 +56,5 @@ jobs:
 
           args: >
             -Dsonar.projectKey=jceintrey_gerez-un-projet-collaboratif-front
-            -Dsonar.organization=jceintrey
-            -Dsonar.javascript.lcov.reportPaths=../coverage/bobapp/lcov.info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
