@@ -26,7 +26,7 @@ jobs:
         with:
           projectBaseDir: back
           args: >
-            -Dsonar.projectKey=jceintrey_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD-back
+            -Dsonar.projectKey=jceintrey_gerez-un-projet-collaboratif-back
             -Dsonar.organization=jceintrey
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
@@ -56,7 +56,7 @@ jobs:
           projectBaseDir: front
 
           args: >
-            -Dsonar.projectKey=jceintrey_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD-front
+            -Dsonar.projectKey=jceintrey_gerez-un-projet-collaboratif-front
             -Dsonar.organization=jceintrey
             -Dsonar.javascript.lcov.reportPaths=../coverage/bobapp/lcov.info
         env:
