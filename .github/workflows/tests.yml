@@ -1,0 +1,56 @@
+name: Backend and front Tests and Coverage
+
+on: [push]
+
+jobs:
+  frontend-tests:
+    runs-on: ubuntu-latest
+    container:
+      image: node:14-slim #docker image to use as runner
+      # options: --user node
+    defaults:
+      run:
+        working-directory: front
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install chrome
+        run: |
+          apt-get update
+          apt-get install -y wget gnupg
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+          apt-get update
+          apt-get install -y google-chrome-stable
+      - name: Install dependencies
+        run: npm install
+      - name: run tests
+        run: npm run test -- --watch=false --browsers=CIChrome --code-coverage
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lcov-report
+          path: coverage/bobapp
+
+  backend-tests:
+    runs-on: ubuntu-latest
+    container:
+      image: maven:3.8-jdk-11 #docker image to use as runner
+    defaults:
+      run:
+        working-directory: back
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Maven tests and generate code coverage report
+        run: mvn clean verify
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco
