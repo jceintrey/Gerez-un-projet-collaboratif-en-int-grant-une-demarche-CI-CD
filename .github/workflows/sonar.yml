@@ -1,6 +1,12 @@
 name: SonarCloud - Back & Front
 
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   sonar-back:
@@ -17,7 +23,7 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
-      - name: Compile backend
+      - name: Compile and execute tests
         working-directory: back
         run: mvn clean verify
 
