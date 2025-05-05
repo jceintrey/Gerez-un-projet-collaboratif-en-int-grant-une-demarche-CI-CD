@@ -1,0 +1,17 @@
+
+# General
+sonar.organization=jceintrey
+
+# # --- Sources to analyse ---
+sonar.sources=back/src/main/java,front/src
+sonar.tests=back/src/test/java
+sonar.java.binaries=back/target/classes
+
+# # --- Coverage ---
+sonar.coverage.jacoco.xmlReportPaths=back/target/site/jacoco/jacoco.xml
+sonar.javascript.lcov.reportPaths=front/coverage/bobapp/lcov.info
+
+# # --- Other ---
+# sonar.language=java
+sonar.sourceEncoding=UTF-8
+sonar.exclusions=**/node_modules/**,**/*.spec.ts,**/test/**,**/__mocks__/**
