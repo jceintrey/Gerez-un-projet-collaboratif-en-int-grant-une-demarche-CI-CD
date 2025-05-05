@@ -25,6 +25,10 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           projectBaseDir: back
+          args: >
+            -Dsonar.projectKey=jceintrey_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD-back
+            -Dsonar.organization=jceintrey
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -51,5 +55,10 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           projectBaseDir: front
+
+          args: >
+            -Dsonar.projectKey=jceintrey_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD-front
+            -Dsonar.organization=jceintrey
+            -Dsonar.javascript.lcov.reportPaths=../coverage/bobapp/lcov.info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
