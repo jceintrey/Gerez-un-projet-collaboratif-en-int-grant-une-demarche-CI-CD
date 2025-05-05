@@ -19,7 +19,7 @@ jobs:
 
       - name: Compile backend
         working-directory: back
-        run: mvn clean compile
+        run: mvn clean verify
 
       - name: SonarCloud analyse backend
         uses: SonarSource/sonarcloud-github-action@v2
