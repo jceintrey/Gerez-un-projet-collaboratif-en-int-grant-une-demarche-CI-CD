@@ -1,10 +1,11 @@
 name: Dockerhub deployment
-
 on:
   push:
     branches:
-      - cicd/dockerhub-deploy
-
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   bobapp-back:
     runs-on: ubuntu-latest
