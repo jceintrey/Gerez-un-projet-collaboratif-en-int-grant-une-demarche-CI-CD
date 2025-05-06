@@ -91,10 +91,63 @@ docker compose up -d
 
 You can also use the latest tag to retrieve the latest image
 
-## CICD pipelines
+## CI/CD pipelines & KPIs
 
-The project defines 3 pipelines with Github Actions:
+The CI/CD pipeline is managed through GitHub Actions and consists of the steps bellow. Please notice all pipelines are executed on push or pr on main.
 
-* test code and generate coverage reports for both front and back - tests.yml
-* verify code quality with sonar cloud - sonar.yml
-* build and push images on Dockerhub - deploy.yml
+### Run tests (frontend and backend)
+
+* Executes unit tests for both Angular and Spring Boot
+* Generates code coverage reports
+* Code quality analysis with SonarCloud
+
+Test pipeline is defined in .github/workflows/tests.yml with 2 jobs (for front and for back).  Please notice the use of a Custom browser defined in karma.conf.js, running in headless mode.
+
+### Performs static code analysis
+
+* Detects bugs, code smells, and duplications with Sonar Cloud integration.
+
+Quality pipeline is defined in .github/workflows/sonar.yml with 2 jobs (for front and for back). I have used github Action sonar pluggin that provides a nice integration with Github (PR comments, badges...).
+
+### Build & Push Docker Images
+
+* Builds Docker images for frontend and backend
+* Tags images with the short Git commit hash
+* Pushes images to Docker Hub with two tags: specific :sha and :latest
+
+Deploy pipeline is defined in .github/workflows/deploy.yml with 2 jobs (for front and for back)
+
+### Proposed KPIs
+
+Sonar projects are configured in "Clean as you code" mode. The quality is evaluated on the new code lines.
+
+| KPI  | Threshold          | Details |
+| :--------------- |:---------------:| -----:|
+| Code coverage  |  ≥ 80%        | /!\ only on new code |
+| SonarCloud warnings  | < 10             |  .... |
+
+### Metrics
+
+Global backend and frontend observed metrics
+
+| Metric          | Backend | Frontend |
+|-----------------|---------|----------|
+| Code Coverage   | 38.8%   | 47.6%    |
+| Security Issues | 0       | 0        |
+| Reliability     | 1       | 1        |
+| Maintainability | 6       | 5        |
+| Duplications    | 0%      | 0%       |
+
+### User Feedback
+
+#### Ideas
+
+  > Bouton like : "Ça serait top d'avoir un bouton pour liker une blague" - jceintrey 06/05/2025 from dicsussions
+
+#### Bugs
+
+  No bug yet reported
+
+#### Improvements
+
+ > #8 : "les même blagues reviennent régulièrement" - jceintrey 06/05/2025 from issues
