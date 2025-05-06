@@ -1,6 +1,12 @@
 name: Backend and front Tests and Coverage
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   frontend-tests:

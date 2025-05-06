@@ -1,0 +1,62 @@
+name: Dockerhub deployment
+
+on:
+  push:
+    branches:
+      - cicd/dockerhub-deploy
+
+jobs:
+  bobapp-back:
+    runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USER: ${{secrets.DOCKERHUB_USER}}
+      DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
+
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v4
+      - name: Get commit SHA
+        id: sha
+        run: echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
+
+      - name: docker login
+        run: echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+      - name: Build the Docker image and push
+        working-directory: back
+        run: |
+          COMMIT_SHA="${{ steps.sha.outputs.commit_sha }}"
+          DOCKER_IMAGE="${DOCKERHUB_USER}/bobapp-back:$COMMIT_SHA"
+          DOCKER_IMAGE_LATEST="${DOCKERHUB_USER}/bobapp-back:latest"
+          echo "Docker image commit is $DOCKER_IMAGE"
+          echo "Docker image latest is $DOCKER_IMAGE_LATEST"
+          docker build . --file ./Dockerfile --tag $DOCKER_IMAGE --tag $DOCKER_IMAGE_LATEST
+          docker push $DOCKER_IMAGE
+          docker push $DOCKER_IMAGE_LATEST
+  bobapp-front:
+    runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USER: ${{secrets.DOCKERHUB_USER}}
+      DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
+      DOCKER_IMAGE: ${{secrets.DOCKERHUB_USER}}/bobapp-front:latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v4
+
+      - name: Get commit SHA
+        id: sha
+        run: echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
+
+      - name: docker login
+        run: echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+
+      - name: Build the Docker image and push
+        working-directory: front
+        run: |
+          COMMIT_SHA="${{ steps.sha.outputs.commit_sha }}"
+          DOCKER_IMAGE="${DOCKERHUB_USER}/bobapp-front:$COMMIT_SHA"
+          DOCKER_IMAGE_LATEST="${DOCKERHUB_USER}/bobapp-front:latest"
+          echo "Docker image commit is $DOCKER_IMAGE"
+          echo "Docker image latest is $DOCKER_IMAGE_LATEST"
+          docker build . --file ./Dockerfile --tag $DOCKER_IMAGE --tag $DOCKER_IMAGE_LATEST
+          docker push $DOCKER_IMAGE
+          docker push $DOCKER_IMAGE_LATEST
