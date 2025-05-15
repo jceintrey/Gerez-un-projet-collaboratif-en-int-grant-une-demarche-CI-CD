@@ -2,7 +2,7 @@ name: Dockerhub deployment
 on:
   push:
     branches:
-      - main
+      - demo/dummy
   pull_request:
     branches:
       - main

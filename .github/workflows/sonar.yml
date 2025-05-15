@@ -3,7 +3,7 @@ name: SonarCloud - Back & Front
 on:
   push:
     branches:
-      - main
+      - demo/dummy
   pull_request:
     branches:
       - main
