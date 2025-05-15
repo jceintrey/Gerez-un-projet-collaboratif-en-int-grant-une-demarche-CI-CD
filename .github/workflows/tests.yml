@@ -3,7 +3,7 @@ name: Backend and front Tests and Coverage
 on:
   push:
     branches:
-      - main
+      - demo/dummy
   pull_request:
     branches:
       - main
